@@ -27,7 +27,7 @@ if err != nil {
 	return
 }
 
-// List content of the bucket 
+// List content of the bucket, show latest additions first
 
 fileList, err := o.List()
 
