@@ -18,6 +18,15 @@ func main() {
 
 bucket, err := s3gopher.New("myBucketName", "myAccessKey", "mySecretAccessKey")
 
+// Are my credentials valid?
+
+err := bucket.Test()
+
+if err != nil {
+	fmt.Printeln("Something bad happended when testing credentials.")
+	return
+}
+
 // List content of the bucket 
 
 fileList, err := o.List()
