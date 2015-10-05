@@ -155,7 +155,7 @@ func (s *Bucket) Get(key string) (o *Object, err error) {
 //Put stores an object into an S3 bucket
 func (s *Bucket) Put(o *Object) error {
 
-	/*	params := &s3.PutObjectInput{
+	params := &s3.PutObjectInput{
 			Bucket:      aws.String(s.Bucket),    // Required
 			Key:         aws.String("/" + o.Key), // Required
 			ACL:         aws.String(s.ACL),
@@ -163,9 +163,6 @@ func (s *Bucket) Put(o *Object) error {
 			ContentType: aws.String("application/json"),
 		}
 		_, err := s.Client.PutObject(params)
-	*/
-
-	fmt.Println("Debug: S3 PUT temp disabled")
 
 	var err error
 
