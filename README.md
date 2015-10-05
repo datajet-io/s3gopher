@@ -2,7 +2,7 @@
 s3gopher is a light-weight S3 library using Go. It's built on top of [Amazon's offical AWS SDK](github.com/aws/aws-sdk-go/aws).
 
 ## Why
-Found the AWS cumbersome to use if you just want to read / write a single or few files from a S3 bucket or list it's content.
+Found the AWS cumbersome to use if you just want to read / write a single or few files from a S3 bucket or list its content.
 
 ## Caveats 
 
@@ -22,9 +22,9 @@ bucket, err := s3gopher.New("myBucketName", "myAccessKey", "mySecretAccessKey")
 
 fileList, err := o.List()
 
-// Get a file from the bucket
+// Get the first file from the bucket
 
-o, err := bucket.Get("myKeyAkaFilename")
+o, err := bucket.Get(fileList[0].Key)
 
 if err != nil {
 	fmt.Printeln("Something bad happended when reading the data.")
@@ -33,9 +33,9 @@ if err != nil {
 
 // When was the file last modified?
 
-fmt.Printeln(fileList[0].LastModified), type time.Time
+fmt.Printeln(o.LastModified)
 
-// Output it's content, type []byte
+// Output its []byte content
 
 fmt.Printeln(o.Data)
 
