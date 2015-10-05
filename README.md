@@ -6,7 +6,7 @@ Found the AWS cumbersome to use if you just want to read / write a single or few
 
 ## Caveats 
 
-Region is hard-coded to "eu-west-1" and ACL to "private"
+Region is hard-coded to "eu-west-1" and ACL to "private". Probably not well suited for buckets with thousands or millions of files.
 
 ## Example usage
 
@@ -18,6 +18,12 @@ func main() {
 
 bucket, err := s3gopher.New("myBucketName", "myAccessKey", "mySecretAccessKey")
 
+// List content of the bucket 
+
+fileList, err := o.List()
+
+// Get a file from the bucket
+
 o, err := bucket.Get("myKeyAkaFilename")
 
 if err != nil {
@@ -25,10 +31,9 @@ if err != nil {
 	return
 }
 
-
 // When was the file last modified?
 
-fmt.Printeln(o.LastModified), type time.Time
+fmt.Printeln(fileList[0].LastModified), type time.Time
 
 // Output it's content, type []byte
 
