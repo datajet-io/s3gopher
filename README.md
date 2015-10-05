@@ -6,7 +6,7 @@ Found the official SDK to require a lot of boilerplate if you just want to read 
 
 ## Caveats 
 
-Region is hard-coded to "eu-west-1" and ACL to "private". Probably not well suited for buckets with thousands or millions of files.
+[Region](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) is hard-coded to "eu-west-1" and [ACL to "private"](http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl). Probably not well suited for buckets with thousands or millions of files.
 
 ## Example usage
 
