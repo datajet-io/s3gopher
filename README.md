@@ -1,5 +1,5 @@
 ## s3gopher
-s3gopher is a light-weight S3 library using Go. It's built on top of [Amazon's offical AWS SDK](github.com/aws/aws-sdk-go/aws).
+s3gopher is a light-weight S3 library using Go. It's built on top of [Amazon's offical AWS SDK](https://github.com/aws/aws-sdk-go/aws).
 
 ## Why
 Found the AWS cumbersome to use if you just want to read / write a single or few files from a S3 bucket or list its content.
@@ -70,6 +70,11 @@ if err != nil {
 
 
 ```
+
+
+## To Do
+
+* Delete
 
 
 
