@@ -1,6 +1,7 @@
 package s3gopher
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -39,7 +40,7 @@ func (p Object) String() string {
 }
 
 // ByLastModified implements sort.Interface for []Object based on
-// the LastModified field. Sort is descending
+// the LastModified field. Sort is descending by time
 type ByLastModified []Object
 
 func (a ByLastModified) Len() int           { return len(a) }
@@ -156,15 +157,13 @@ func (s *Bucket) Get(key string) (o *Object, err error) {
 func (s *Bucket) Put(o *Object) error {
 
 	params := &s3.PutObjectInput{
-			Bucket:      aws.String(s.Bucket),    // Required
-			Key:         aws.String("/" + o.Key), // Required
-			ACL:         aws.String(s.ACL),
-			Body:        bytes.NewReader(o.Data),
-			ContentType: aws.String("application/json"),
-		}
-		_, err := s.Client.PutObject(params)
-
-	var err error
+		Bucket:      aws.String(s.Bucket),    // Required
+		Key:         aws.String("/" + o.Key), // Required
+		ACL:         aws.String(s.ACL),
+		Body:        bytes.NewReader(o.Data),
+		ContentType: aws.String("application/json"),
+	}
+	_, err := s.Client.PutObject(params)
 
 	if err != nil {
 		if awsErr, ok := err.(awserr.Error); ok {
