@@ -36,17 +36,17 @@ fileList, err := o.List()
 o, err := bucket.Get(fileList[0].Key)
 
 if err != nil {
-	fmt.Printeln("Something bad happended when reading the data.")
+	fmt.Println("Something bad happended reading the data.")
 	return
 }
 
 // When was the file last modified?
 
-fmt.Printeln(o.LastModified)
+fmt.Println(o.LastModified)
 
 // Output its []byte content
 
-fmt.Printeln(o.Data)
+fmt.Println(o.Data)
 
 /*
 
@@ -60,7 +60,7 @@ Do something with the file's data
 err := bucket.Put(o)
 
 if err != nil {
-	fmt.Printeln("Something bad happended when writing the data.")
+	fmt.Println("Something bad happended when writing the data.")
 	return
 }
 
