@@ -12,7 +12,16 @@ import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/aws/session"
 )
+
+//Config for bucket
+type Config struct {
+	Bucket string
+	ACL string
+	Region string
+	Credentials Credentials
+}
 
 //Bucket handler for a S3 bucket
 type Bucket struct {
@@ -48,16 +57,18 @@ func (a ByLastModified) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByLastModified) Less(i, j int) bool { return a[i].LastModified.After(a[j].LastModified) }
 
 // New creates a new connection to a S3 bucket using the provided credentials.
-func New(bucket, accessKey, secretAccessKey string) (*Bucket, error) {
+// regions: eu-west-1, us-east-1, us-west-1
+// ACL private, public-read
+func New(c Config) (*Bucket, error) {
 
-	creds := credentials.NewStaticCredentials(accessKey, secretAccessKey, "")
+	creds := credentials.NewStaticCredentials(c.Credentials.AccessKey, c.Credentials.SecretAccessKey, "")
 
-	newS3 := s3.New(&aws.Config{
-		Region:      aws.String("eu-west-1"),
+	newS3 := s3.New(session.New(), &aws.Config{
+		Region:      aws.String(c.Region),
 		Credentials: creds,
 	})
 
-	return &Bucket{Client: newS3, Bucket: bucket, ACL: "private"}, nil
+	return &Bucket{Client: newS3, Bucket: c.Bucket, ACL: c.ACL}, nil
 }
 
 //Test tests the connection to the bucket using the provided credentials
@@ -162,6 +173,7 @@ func (s *Bucket) Put(o *Object) error {
 		ACL:         aws.String(s.ACL),
 		Body:        bytes.NewReader(o.Data),
 		ContentType: aws.String("application/json"),
+		ContentEncoding: aws.String("gzip"),
 	}
 	_, err := s.Client.PutObject(params)
 
