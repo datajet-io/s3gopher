@@ -6,7 +6,8 @@ Found the official SDK to require a lot of boilerplate if you just want to read 
 
 ## Caveats 
 
-[Region](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) is hard-coded to "eu-west-1" and [ACL to "private"](http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl). Probably not well suited for buckets with thousands or millions of files.
+* See AWS documentation for [Region](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) and [ACL](http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl) values.
+* Listing is done in memory and not well suited for buckets with thousands or millions of files.
 
 ## Example usage
 
@@ -16,7 +17,14 @@ import "github.com/datajet-io/s3gopher"
 
 func main() {
 
-bucket, err := s3gopher.New("myBucketName", "myAccessKey", "mySecretAccessKey")
+config := s3gopher.Config{
+		Bucket: "bucketname",
+		ACL: "public-read",
+		Region: "us-east-1",
+		Credentials: s3gopher.Credentials{AccessKey: "yourAccessKey", SecretAccessKey:"yourSecretAccessKey"},
+}
+
+bucket, err := s3gopher.New(config)
 
 // Are my credentials valid?
 
